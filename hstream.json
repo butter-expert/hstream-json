@@ -1,0 +1,14 @@
+{
+  "sites": [
+    {
+      "key": "py_4k_jp_anime",
+      "name": "4K动漫",
+      "type": 3,
+      "api": "https://raw.githubusercontent.com/wliqi495-create/jaychou123/main/yingshi/py/4k%E6%97%A5%E6%9C%AC%E5%8A%A8%E6%BC%AB.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 1
+    }
+  ]
+}
