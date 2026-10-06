@@ -1,27 +1,92 @@
 {
-  "spider": "csp_Spider",
-  "sites": [
-    {
-      "key": "hanime1",
-      "name": "Hanime1",
-      "type": 3,
-      "api": "csp_Spider",
-      "searchable": 1,
-      "filterable": 1,
-      "quickSearch": 1,
-      "ext": "https://raw.githubusercontent.com/wliqi495-create/jaychou123/main/yingshi/py9/hanime2.py",
-      "categories": [
-        "全部",
-        "裏番",
-        "泡麵番",
-        "Motion Anime",
-        "3DCG",
-        "2.5D",
-        "2D動畫",
-        "AI生成",
-        "MMD",
-        "Cosplay"
+  "name": "Hanime1",
+  "type": 3,
+  "api": "csp_WoGuo",
+  "searchable": 1,
+  "quickSearch": 0,
+  "filterable": 1,
+  "ext": "https://hanime1.me",
+  "jar": "",
+  "headers": {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "Accept-Language": "zh-TW,zh;q=0.9"
+  },
+  "rules": {
+    "homeContent": {
+      "url": "https://hanime1.me",
+      "regex": [
+        {
+          "title": "分类标签",
+          "pattern": "<input name=\"tags\\[\\]\" type=\"checkbox\" value=\"([^\"]+)\"",
+          "groups": 1
+        }
+      ]
+    },
+    "categoryContent": {
+      "url": "https://hanime1.me/search?tags%5B%5D={tid}&page={page}",
+      "regex": [
+        {
+          "title": "视频列表",
+          "pattern": "<div title=\"([^\"]*)\"[^>]*class=\"video-item-container[^\"]*\">.*?<a href=\"([^\"]+)\"[^>]*class=\"video-link\".*?<img[^>]*src=\"([^\"]+)\"",
+          "groups": 3,
+          "fields": {
+            "vod_id": 2,
+            "vod_name": 1,
+            "vod_pic": 3,
+            "vod_remarks": ""
+          }
+        },
+        {
+          "title": "分页提取",
+          "pattern": "page=(\\d+)",
+          "groups": 1
+        }
+      ]
+    },
+    "detailContent": {
+      "url": "{id}",
+      "regex": [
+        {
+          "title": "标题",
+          "pattern": "<title>(.*?)</title>",
+          "groups": 1
+        },
+        {
+          "title": "封面",
+          "pattern": "poster=\"([^\"]+)\"",
+          "groups": 1
+        },
+        {
+          "title": "播放源",
+          "pattern": "<source src=\"([^\"]+)\"[^>]*size=\"([^\"]+)\"",
+          "groups": 2,
+          "fields": {
+            "url": 1,
+            "quality": 2
+          }
+        },
+        {
+          "title": "直链MP4",
+          "pattern": "https?://[^\\s\"<>]+\\.mp4[^\\s\"<>]*",
+          "groups": 0
+        }
+      ]
+    },
+    "searchContent": {
+      "url": "https://hanime1.me/search?search={key}&page={page}",
+      "regex": [
+        {
+          "title": "搜索结果",
+          "pattern": "<div title=\"([^\"]*)\"[^>]*class=\"video-item-container[^\"]*\">.*?<a href=\"([^\"]+)\"[^>]*class=\"video-link\".*?<img[^>]*src=\"([^\"]+)\"",
+          "groups": 3,
+          "fields": {
+            "vod_id": 2,
+            "vod_name": 1,
+            "vod_pic": 3,
+            "vod_remarks": ""
+          }
+        }
       ]
     }
-  ]
+  }
 }
